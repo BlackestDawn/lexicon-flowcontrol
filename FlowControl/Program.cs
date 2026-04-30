@@ -65,9 +65,11 @@ static internal class Cinema
         if (age <= YouthMaxAge)
         {
             Console.WriteLine($"Youth price: {YoutPrice}kr");
+            return;
         } else if (age >= PensionerMinAge)
         {
             Console.WriteLine($"Pensioner price: {PensionerPrice}kr");
+            return;
         }
 
         Console.WriteLine($"Standard price: {StandardPrice}");
