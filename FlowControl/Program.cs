@@ -24,6 +24,10 @@ class Program
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine(Constants.DoubleLine);
             Console.ResetColor();
+            foreach (var line in menuLines)
+            {
+                Console.WriteLine(line);
+            }
             Console.Write("Enter your choice: ");
 
             var input = Console.ReadLine();
