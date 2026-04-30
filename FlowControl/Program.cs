@@ -8,7 +8,6 @@ class Program
             "0. Quit",
             "1. Cinema (show ticket price based on age using if)"
         ];
-        string doubleLine = new string('=', 40);
 
         Console.WriteLine("Welcome to flowcontrol and string manipulation excercise");
         Console.WriteLine("You will be presented with a number of choices,");
@@ -19,11 +18,11 @@ class Program
         {
             Console.WriteLine("");
             Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine(doubleLine);
+            Console.WriteLine(Constants.DoubleLine);
             Console.ResetColor();
             Console.WriteLine("Main menu");
             Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine(doubleLine);
+            Console.WriteLine(Constants.DoubleLine);
             Console.ResetColor();
             Console.Write("Enter your choice: ");
 
@@ -66,4 +65,9 @@ static internal class Cinema
 
         Console.WriteLine($"Standard price: {StandardPrice}");
     }
+}
+
+static internal class Constants
+{
+    static public readonly string DoubleLine = new string('=', 40);
 }
