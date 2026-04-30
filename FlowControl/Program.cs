@@ -6,7 +6,8 @@ class Program
     {
         string[] menuLines = [
             "0. Quit",
-            "1. Cinema (show ticket price based on age using if)"
+            "1. Cinema (show ticket price based on age using if/switch)",
+            "2. Bulk Cinema (buy tickets for multiple people in one go)"
         ];
 
         Console.WriteLine("Welcome to flowcontrol and string manipulation excercise");
