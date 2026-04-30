@@ -16,14 +16,7 @@ class Program
 
         while (true)
         {
-            Console.WriteLine("");
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine(Constants.DoubleLine);
-            Console.ResetColor();
-            Console.WriteLine("Main menu");
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine(Constants.DoubleLine);
-            Console.ResetColor();
+            Helpers.PrintBanner("Main menu", ConsoleColor.Blue);
             foreach (var line in menuLines)
             {
                 Console.WriteLine(line);
@@ -77,14 +70,7 @@ static internal class Cinema
 
     static public void BuyTicket()
     {
-        Console.WriteLine();
-        Console.ForegroundColor = ConsoleColor.Green;
-        Console.WriteLine(Constants.DoubleLine);
-        Console.ResetColor();
-        Console.WriteLine("Welcome to Theoretic Cinema");
-        Console.ForegroundColor = ConsoleColor.Green;
-        Console.WriteLine(Constants.DoubleLine);
-        Console.ResetColor();
+        Helpers.PrintBanner("Welcome to the Theoretical Cinema", ConsoleColor.Green);
 
         int age;
         bool done = false;
@@ -109,7 +95,18 @@ static internal class Cinema
     }
 }
 
-static internal class Constants
+static internal class Helpers
 {
     static public readonly string DoubleLine = new string('=', 40);
+
+    static public void PrintBanner(string text, ConsoleColor color)
+    {
+        Console.ForegroundColor = color;
+        Console.WriteLine("\n" + DoubleLine);
+        Console.ResetColor();
+        Console.WriteLine(text);
+        Console.ForegroundColor = color;
+        Console.WriteLine(DoubleLine + "\n");
+        Console.ResetColor();
+    }
 }
