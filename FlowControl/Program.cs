@@ -36,6 +36,9 @@ class Program
                 case "1":
                     Cinema.BuyTicket();
                     break;
+                case "2":
+                    Cinema.BulkBuyTickets();
+                    break;
                 default:
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine($"Sorry option '{input}' is not valid or not implemented yet");
@@ -112,6 +115,11 @@ static internal class Cinema
         while (!AskForNumber("Please enter your age to see ticket price", out age));
 
         ShowPrice(CalcAgeBracket(age));
+    }
+
+     static public void BulkBuyTickets()
+    {
+        WelcomeBanner();
     }
 }
 
