@@ -21,7 +21,7 @@ class Program
             {
                 Console.WriteLine(line);
             }
-            Console.Write("Enter your choice: ");
+            Console.Write("\nEnter your choice: ");
 
             var input = Console.ReadLine();
 
@@ -76,7 +76,7 @@ static internal class Cinema
         bool done = false;
         do
         {
-            Console.Write("Please enter you age to see ticket price: ");
+            Console.Write("Please enter your age to see ticket price: ");
             string input = Console.ReadLine();
             if (!int.TryParse(input, out age) || age < 0)
             {
