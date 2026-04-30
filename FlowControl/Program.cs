@@ -1,6 +1,4 @@
-﻿using System.Windows;
-
-namespace FlowControl;
+﻿namespace FlowControl;
 
 class Program
 {
@@ -8,6 +6,7 @@ class Program
     {
         string[] menuLines = [
             "0. Quit",
+            "1. Cinema (show ticket price based on age using if)"
         ];
         string doubleLine = new string('=', 40);
 
@@ -45,4 +44,13 @@ class Program
             }
         }
     }
+}
+
+internal class Cinema
+{
+    private const int YouthMaxAge = 19;
+    private const int YoutPrice = 80;
+    private const int PensionerMinAge = 65;
+    private const int PensionerPrice = 90;
+    private const int StandardPrice = 120;
 }
