@@ -46,11 +46,24 @@ class Program
     }
 }
 
-internal class Cinema
+static internal class Cinema
 {
     private const int YouthMaxAge = 19;
     private const int YoutPrice = 80;
     private const int PensionerMinAge = 65;
     private const int PensionerPrice = 90;
     private const int StandardPrice = 120;
+
+    private void ShowPrice(int age)
+    {
+        if (age <= YouthMaxAge)
+        {
+            Console.WriteLine($"Youth price: {YoutPrice}kr");
+        } else if (age >= PensionerMinAge)
+        {
+            Console.WriteLine($"Pensioner price: {PensionerPrice}kr");
+        }
+
+        Console.WriteLine($"Standard price: {StandardPrice}");
+    }
 }
