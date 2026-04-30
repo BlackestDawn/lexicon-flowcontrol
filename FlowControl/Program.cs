@@ -39,6 +39,9 @@ class Program
                     Console.WriteLine("Hope you had fun. Goodbye");
                     Environment.Exit(0);
                     break;
+                case "1":
+                    Cinema.BuyTicket();
+                    break;
                 default:
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine($"Sorry option '{input}' is not valid or not implemented yet");
@@ -68,6 +71,34 @@ static internal class Cinema
         }
 
         Console.WriteLine($"Standard price: {StandardPrice}");
+    }
+
+    static public void BuyTicket()
+    {
+        Console.WriteLine();
+        Console.ForegroundColor = ConsoleColor.Green;
+        Console.WriteLine(Constants.DoubleLine);
+        Console.ResetColor();
+        Console.WriteLine("Welcome to Theoretic Cinema");
+        Console.ForegroundColor = ConsoleColor.Green;
+        Console.WriteLine(Constants.DoubleLine);
+        Console.ResetColor();
+
+        int age = -1;
+        do
+        {
+            Console.Write("Please enter you age to see ticket price: ");
+            string input = Console.ReadLine();
+            if (!int.TryParse(input, out age) && age < 0)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"Could not parse '{input}' into a valid age-number");
+                Console.ResetColor();
+                continue;
+            }
+        } while (age <= -1);
+
+        ShowPrice(age);
     }
 }
 
