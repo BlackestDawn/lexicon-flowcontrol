@@ -67,22 +67,18 @@ static internal class Cinema
         return CinemaAgeBracket.Standard;
     }
 
-    static private void ShowPrice(CinemaAgeBracket age)
+    static private int GetBracketPrice(CinemaAgeBracket bracket) =>
+    bracket switch
     {
-        switch (age)
-        {
-            case CinemaAgeBracket.Young:
-                Console.WriteLine($"Youth price: {YouthPrice}kr");
-                break;
-            case CinemaAgeBracket.Standard:
-                Console.WriteLine($"Standard price: {StandardPrice}kr");
-                break;
-            case CinemaAgeBracket.Pensioner:
-                Console.WriteLine($"Pensioner price: {PensionerPrice}kr");
-                break;
-            default:
-                throw new ArgumentException($"unknown or unsupported age bracket: '{age}'");
-        }
+      CinemaAgeBracket.Young => YouthPrice,
+      CinemaAgeBracket.Standard => StandardPrice,
+      CinemaAgeBracket.Pensioner => PensionerPrice,
+      _ => throw new ArgumentException($"unknown or unsupported age bracket: '{bracket}'"),
+    };
+
+    static private void ShowPrice(CinemaAgeBracket bracket)
+    {
+        Console.WriteLine($"{bracket} price: {GetBracketPrice(bracket)}kr");
     }
 
     static public void BuyTicket()
