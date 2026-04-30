@@ -86,19 +86,24 @@ static internal class Cinema
         Console.WriteLine(Constants.DoubleLine);
         Console.ResetColor();
 
-        int age = -1;
+        int age;
+        bool done = false;
         do
         {
             Console.Write("Please enter you age to see ticket price: ");
             string input = Console.ReadLine();
-            if (!int.TryParse(input, out age) && age < 0)
+            if (!int.TryParse(input, out age) || age < 0)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine($"Could not parse '{input}' into a valid age-number");
                 Console.ResetColor();
                 continue;
             }
-        } while (age <= -1);
+            else
+            {
+                done = true;
+            }
+        } while (!done);
 
         ShowPrice(age);
     }
