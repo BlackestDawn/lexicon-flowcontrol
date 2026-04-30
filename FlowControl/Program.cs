@@ -57,7 +57,7 @@ static internal class Cinema
     private const int PensionerPrice = 90;
     private const int StandardPrice = 120;
 
-    private void ShowPrice(int age)
+    static private void ShowPrice(int age)
     {
         if (age <= YouthMaxAge)
         {
