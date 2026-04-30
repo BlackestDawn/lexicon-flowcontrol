@@ -87,28 +87,29 @@ static internal class Cinema
         Helpers.PrintBanner("Welcome to the Theoretical Cinema", ConsoleColor.Green);
     }
 
+    static private bool AskForNumber(string prompt, out int age)
+    {
+        Console.Write($"{prompt}: ");
+        string input = Console.ReadLine();
+        if (!int.TryParse(input, out age) || age < 0)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine($"Could not parse '{input}' into a valid age-number");
+            Console.ResetColor();
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
     static public void BuyTicket()
     {
         WelcomeBanner();
 
         int age;
-        bool done = false;
-        do
-        {
-            Console.Write("Please enter your age to see ticket price: ");
-            string input = Console.ReadLine();
-            if (!int.TryParse(input, out age) || age < 0)
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"Could not parse '{input}' into a valid age-number");
-                Console.ResetColor();
-                continue;
-            }
-            else
-            {
-                done = true;
-            }
-        } while (!done);
+        while (!AskForNumber("Please enter your age to see ticket price", out age));
 
         ShowPrice(CalcAgeBracket(age));
     }
