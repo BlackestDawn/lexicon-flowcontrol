@@ -48,24 +48,41 @@ class Program
 static internal class Cinema
 {
     private const int YouthMaxAge = 19;
-    private const int YoutPrice = 80;
+    private const int YouthPrice = 80;
     private const int PensionerMinAge = 65;
     private const int PensionerPrice = 90;
     private const int StandardPrice = 120;
 
-    static private void ShowPrice(int age)
+    static private CinemaAgeBracket CalcAgeBracket(int age)
     {
         if (age <= YouthMaxAge)
         {
-            Console.WriteLine($"Youth price: {YoutPrice}kr");
-            return;
-        } else if (age >= PensionerMinAge)
+            return CinemaAgeBracket.Young;
+        }
+        else if (age >= PensionerMinAge)
         {
-            Console.WriteLine($"Pensioner price: {PensionerPrice}kr");
-            return;
+            return CinemaAgeBracket.Pensioner;
         }
 
-        Console.WriteLine($"Standard price: {StandardPrice}");
+        return CinemaAgeBracket.Standard;
+    }
+
+    static private void ShowPrice(CinemaAgeBracket age)
+    {
+        switch (age)
+        {
+            case CinemaAgeBracket.Young:
+                Console.WriteLine($"Youth price: {YouthPrice}kr");
+                break;
+            case CinemaAgeBracket.Standard:
+                Console.WriteLine($"Standard price: {StandardPrice}kr");
+                break;
+            case CinemaAgeBracket.Pensioner:
+                Console.WriteLine($"Pensioner price: {PensionerPrice}kr");
+                break;
+            default:
+                throw new ArgumentException($"unknown or unsupported age bracket: '{age}'");
+        }
     }
 
     static public void BuyTicket()
@@ -91,8 +108,15 @@ static internal class Cinema
             }
         } while (!done);
 
-        ShowPrice(age);
+        ShowPrice(CalcAgeBracket(age));
     }
+}
+
+internal enum CinemaAgeBracket
+{
+    Young,
+    Standard,
+    Pensioner
 }
 
 static internal class Helpers
