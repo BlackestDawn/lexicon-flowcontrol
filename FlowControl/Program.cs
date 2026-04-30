@@ -82,9 +82,14 @@ static internal class Cinema
         Console.WriteLine($"{bracket} price: {GetBracketPrice(bracket)}kr");
     }
 
-    static public void BuyTicket()
+    static private void WelcomeBanner()
     {
         Helpers.PrintBanner("Welcome to the Theoretical Cinema", ConsoleColor.Green);
+    }
+
+    static public void BuyTicket()
+    {
+        WelcomeBanner();
 
         int age;
         bool done = false;
