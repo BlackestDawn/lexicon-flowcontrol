@@ -8,7 +8,8 @@ class Program
             "0. Quit",
             "1. Cinema (show ticket price based on age using if/switch)",
             "2. Bulk Cinema (buy tickets for multiple people in one go)",
-            "3. Looping (prints your input 10 times on one row)"
+            "3. Looping (prints your input 10 times on one row)",
+            "4. String splitting (will print the third word from a sentence)"
         ];
 
         Console.WriteLine("Welcome to flowcontrol and string manipulation excercise");
@@ -42,6 +43,9 @@ class Program
                     break;
                 case "3":
                     LoopIt.Run();
+                    break;
+                case "4":
+                    SplitThirdWord.Run();
                     break;
                 default:
                     Console.ForegroundColor = ConsoleColor.Red;
@@ -158,6 +162,34 @@ static internal class LoopIt
             Console.Write($"{i}. {input} ");
         }
         Console.WriteLine();
+        Helpers.Pause();
+    }
+}
+
+static internal class SplitThirdWord
+{
+    static private void WelcomeBanner()
+    {
+        Helpers.PrintBanner("Split it", ConsoleColor.Yellow);
+    }
+
+    static public void Run()
+    {
+        WelcomeBanner();
+
+        string[] words;
+        do {
+            Console.WriteLine("Please enter at least 3 words separated by spaces: ");
+            string input = Console.ReadLine();
+
+            words = input.Split(" ").Where(str => !string.IsNullOrWhiteSpace(str)).ToArray();
+            if (words.Length < 3)
+            {
+                Console.WriteLine("Not enough valid words provided, try again");
+            }
+        } while (words.Length < 3);
+
+        Console.WriteLine($"The third words is: {words[2]}");
         Helpers.Pause();
     }
 }
