@@ -58,7 +58,7 @@ static internal class Cinema
     {
         if (age <= YouthMaxAge)
         {
-            return CinemaAgeBracket.Young;
+            return CinemaAgeBracket.Youth;
         }
         else if (age >= PensionerMinAge)
         {
