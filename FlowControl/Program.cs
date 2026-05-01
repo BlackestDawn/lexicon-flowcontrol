@@ -112,6 +112,8 @@ static internal class Cinema
         WelcomeBanner();
 
         int age;
+
+        Console.WriteLine("Thank you for buying one ticket.");
         while (!AskForNumber("Please enter your age to see ticket price", out age));
 
         ShowPrice(CalcAgeBracket(age));
