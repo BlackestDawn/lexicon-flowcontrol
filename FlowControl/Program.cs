@@ -109,6 +109,19 @@ static internal class Cinema
      static public void BulkBuyTickets()
     {
         WelcomeBanner();
+
+        int totalCost = 0;
+
+        Console.WriteLine("Thank you for buying multiple tickets.");
+        int numTickets = AskForNumber("Please enter number of tickets you want buy");
+
+        for (int i = 1; i <= numTickets; i++)
+        {
+            int age = AskForNumber($"Enter age for person {i}");
+            totalCost += (int)CalcAgeBracket(age);
+        }
+
+        Console.WriteLine($"Total kostnaden för {numTickets} personer är {totalCost}kr");
     }
 }
 
