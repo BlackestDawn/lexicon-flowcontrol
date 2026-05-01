@@ -7,7 +7,8 @@ class Program
         string[] menuLines = [
             "0. Quit",
             "1. Cinema (show ticket price based on age using if/switch)",
-            "2. Bulk Cinema (buy tickets for multiple people in one go)"
+            "2. Bulk Cinema (buy tickets for multiple people in one go)",
+            "3. Looping (prints your input 10 times on one row)"
         ];
 
         Console.WriteLine("Welcome to flowcontrol and string manipulation excercise");
@@ -38,6 +39,9 @@ class Program
                     break;
                 case "2":
                     Cinema.BulkBuyTickets();
+                    break;
+                case "3":
+                    LoopIt.Run();
                     break;
                 default:
                     Console.ForegroundColor = ConsoleColor.Red;
@@ -130,6 +134,21 @@ internal enum CinemaAgeBracket
     Youth = 80,
     Standard = 120,
     Pensioner = 90
+}
+
+static internal class LoopIt
+{
+    static private void WelcomeBanner()
+    {
+        Helpers.PrintBanner("So you want to loop some text", ConsoleColor.Magenta);
+    }
+
+    static public void Run()
+    {
+        WelcomeBanner();
+
+        Console.WriteLine("TODO: implement logic");
+    }
 }
 
 static internal class Helpers
