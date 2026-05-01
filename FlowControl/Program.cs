@@ -168,9 +168,25 @@ static internal class LoopIt
 
 static internal class SplitThirdWord
 {
+    static private void WelcomeBanner()
+    {
+        Helpers.PrintBanner("Split it", ConsoleColor.Yellow);
+    }
+
     static public void Run()
     {
-        Console.WriteLine("TODO: implement logic");
+        WelcomeBanner();
+
+        string[] words;
+        do {
+        Console.WriteLine("Please enter at least 3 words separated by spaces: ");
+        string input = Console.ReadLine();
+
+        words = input.Split(" ");
+        } while (words.Length < 3);
+
+        Console.WriteLine($"The third words is: {words[2]}");
+        Helpers.Pause();
     }
 }
 
