@@ -48,9 +48,7 @@ class Program
                     SplitThirdWord.Run();
                     break;
                 default:
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine($"Sorry option '{input}' is not valid or not implemented yet");
-                    Console.ResetColor();
+                    Helpers.ErrorMessage($"Sorry option '{input}' is not valid or not implemented yet");
                     break;
             }
         }
@@ -93,9 +91,7 @@ static internal class Cinema
             string input = Console.ReadLine();
             if (!int.TryParse(input, out int age) || age < 0)
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"Could not parse '{input}' into a valid age-number");
-                Console.ResetColor();
+                Helpers.ErrorMessage($"Could not parse '{input}' into a valid age-number");
             }
             else
             {
@@ -185,7 +181,7 @@ static internal class SplitThirdWord
             words = input.Split(" ").Where(str => !string.IsNullOrWhiteSpace(str)).ToArray();
             if (words.Length < 3)
             {
-                Console.WriteLine("Not enough valid words provided, try again");
+                Helpers.ErrorMessage("Not enough valid words provided, try again");
             }
         } while (words.Length < 3);
 
@@ -213,5 +209,12 @@ static internal class Helpers
     {
         Console.WriteLine("\nPress any key to continue...");
         Console.ReadLine();
+    }
+
+    static public void ErrorMessage(string message)
+    {
+        Console.ForegroundColor = ConsoleColor.Red;
+        Console.WriteLine($"\n{message}\n");
+        Console.ResetColor();
     }
 }
