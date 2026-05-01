@@ -108,6 +108,7 @@ static internal class Cinema
         int age = AskForNumber("Please enter your age to see ticket price");
 
         ShowPrice(CalcAgeBracket(age));
+        Helpers.Pause();
     }
 
      static public void BulkBuyTickets()
@@ -126,6 +127,7 @@ static internal class Cinema
         }
 
         Console.WriteLine($"Total cost for {numTickets} persons is {totalCost}kr");
+        Helpers.Pause();
     }
 }
 
@@ -155,6 +157,8 @@ static internal class LoopIt
         {
             Console.Write($"{i}. {input} ");
         }
+        Console.WriteLine();
+        Helpers.Pause();
     }
 }
 
@@ -171,5 +175,11 @@ static internal class Helpers
         Console.ForegroundColor = color;
         Console.WriteLine(DoubleLine + "\n");
         Console.ResetColor();
+    }
+
+    static public void Pause()
+    {
+        Console.WriteLine("\nPress any key to continue...");
+        Console.ReadLine();
     }
 }
