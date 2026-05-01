@@ -140,14 +140,21 @@ static internal class LoopIt
 {
     static private void WelcomeBanner()
     {
-        Helpers.PrintBanner("So you want to loop some text", ConsoleColor.Magenta);
+        Helpers.PrintBanner("Loop your text", ConsoleColor.Magenta);
     }
 
     static public void Run()
     {
         WelcomeBanner();
 
-        Console.WriteLine("TODO: implement logic");
+        Console.WriteLine("So you want to loop some text.");
+        Console.Write("Please enter a word or two: ");
+        string input = Console.ReadLine();
+
+        for (int i = 1; i <= 10; i++)
+        {
+            Console.Write($"{i}. {input} ");
+        }
     }
 }
 
