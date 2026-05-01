@@ -179,10 +179,14 @@ static internal class SplitThirdWord
 
         string[] words;
         do {
-        Console.WriteLine("Please enter at least 3 words separated by spaces: ");
-        string input = Console.ReadLine();
+            Console.WriteLine("Please enter at least 3 words separated by spaces: ");
+            string input = Console.ReadLine();
 
-        words = input.Split(" ");
+            words = input.Split(" ").Where(str => !string.IsNullOrWhiteSpace(str)).ToArray();
+            if (words.Length < 3)
+            {
+                Console.WriteLine("Not enough valid words provided, try again");
+            }
         } while (words.Length < 3);
 
         Console.WriteLine($"The third words is: {words[2]}");
