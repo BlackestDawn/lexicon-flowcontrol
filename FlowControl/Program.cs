@@ -6,7 +6,8 @@ class Program
     {
         string[] menuLines = [
             "0. Quit",
-            "1. Cinema (show ticket price based on age using if)"
+            "1. Cinema (show ticket price based on age using if/switch)",
+            "2. Bulk Cinema (buy tickets for multiple people in one go)"
         ];
 
         Console.WriteLine("Welcome to flowcontrol and string manipulation excercise");
@@ -35,6 +36,9 @@ class Program
                 case "1":
                     Cinema.BuyTicket();
                     break;
+                case "2":
+                    Cinema.BulkBuyTickets();
+                    break;
                 default:
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine($"Sorry option '{input}' is not valid or not implemented yet");
@@ -48,51 +52,84 @@ class Program
 static internal class Cinema
 {
     private const int YouthMaxAge = 19;
-    private const int YoutPrice = 80;
     private const int PensionerMinAge = 65;
-    private const int PensionerPrice = 90;
-    private const int StandardPrice = 120;
 
-    static private void ShowPrice(int age)
+    static private CinemaAgeBracket CalcAgeBracket(int age)
     {
         if (age <= YouthMaxAge)
         {
-            Console.WriteLine($"Youth price: {YoutPrice}kr");
-            return;
-        } else if (age >= PensionerMinAge)
+            return CinemaAgeBracket.Young;
+        }
+        else if (age >= PensionerMinAge)
         {
-            Console.WriteLine($"Pensioner price: {PensionerPrice}kr");
-            return;
+            return CinemaAgeBracket.Pensioner;
         }
 
-        Console.WriteLine($"Standard price: {StandardPrice}");
+        return CinemaAgeBracket.Standard;
     }
 
-    static public void BuyTicket()
+    static private void ShowPrice(CinemaAgeBracket bracket)
+    {
+        Console.WriteLine($"{bracket} price: {(int)bracket}kr");
+    }
+
+    static private void WelcomeBanner()
     {
         Helpers.PrintBanner("Welcome to the Theoretical Cinema", ConsoleColor.Green);
+    }
 
-        int age;
-        bool done = false;
-        do
-        {
-            Console.Write("Please enter your age to see ticket price: ");
+    static private int AskForNumber(string prompt)
+    {
+        while (true) {
+            Console.Write($"{prompt}: ");
             string input = Console.ReadLine();
-            if (!int.TryParse(input, out age) || age < 0)
+            if (!int.TryParse(input, out int age) || age < 0)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine($"Could not parse '{input}' into a valid age-number");
                 Console.ResetColor();
-                continue;
             }
             else
             {
-                done = true;
+                return age;
             }
-        } while (!done);
-
-        ShowPrice(age);
+        }
     }
+
+    static public void BuyTicket()
+    {
+        WelcomeBanner();
+
+        Console.WriteLine("Thank you for buying one ticket.");
+        int age = AskForNumber("Please enter your age to see ticket price");
+
+        ShowPrice(CalcAgeBracket(age));
+    }
+
+     static public void BulkBuyTickets()
+    {
+        WelcomeBanner();
+
+        int totalCost = 0;
+
+        Console.WriteLine("Thank you for buying multiple tickets.");
+        int numTickets = AskForNumber("Please enter number of tickets you want to buy");
+
+        for (int i = 1; i <= numTickets; i++)
+        {
+            int age = AskForNumber($"Enter age for person {i}");
+            totalCost += (int)CalcAgeBracket(age);
+        }
+
+        Console.WriteLine($"Total cost for {numTickets} persons is {totalCost}kr");
+    }
+}
+
+internal enum CinemaAgeBracket
+{
+    Youth = 80,
+    Standard = 120,
+    Pensioner = 90
 }
 
 static internal class Helpers
