@@ -113,7 +113,7 @@ static internal class Cinema
         int totalCost = 0;
 
         Console.WriteLine("Thank you for buying multiple tickets.");
-        int numTickets = AskForNumber("Please enter number of tickets you want buy");
+        int numTickets = AskForNumber("Please enter number of tickets you want to buy");
 
         for (int i = 1; i <= numTickets; i++)
         {
@@ -121,13 +121,13 @@ static internal class Cinema
             totalCost += (int)CalcAgeBracket(age);
         }
 
-        Console.WriteLine($"Total kostnaden för {numTickets} personer är {totalCost}kr");
+        Console.WriteLine($"Total cost for {numTickets} persons is {totalCost}kr");
     }
 }
 
 internal enum CinemaAgeBracket
 {
-    Young = 80,
+    Youth = 80,
     Standard = 120,
     Pensioner = 90
 }
