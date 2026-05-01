@@ -52,10 +52,7 @@ class Program
 static internal class Cinema
 {
     private const int YouthMaxAge = 19;
-    private const int YouthPrice = 80;
     private const int PensionerMinAge = 65;
-    private const int PensionerPrice = 90;
-    private const int StandardPrice = 120;
 
     static private CinemaAgeBracket CalcAgeBracket(int age)
     {
@@ -71,18 +68,9 @@ static internal class Cinema
         return CinemaAgeBracket.Standard;
     }
 
-    static private int GetBracketPrice(CinemaAgeBracket bracket) =>
-    bracket switch
-    {
-      CinemaAgeBracket.Young => YouthPrice,
-      CinemaAgeBracket.Standard => StandardPrice,
-      CinemaAgeBracket.Pensioner => PensionerPrice,
-      _ => throw new ArgumentException($"unknown or unsupported age bracket: '{bracket}'"),
-    };
-
     static private void ShowPrice(CinemaAgeBracket bracket)
     {
-        Console.WriteLine($"{bracket} price: {GetBracketPrice(bracket)}kr");
+        Console.WriteLine($"{bracket} price: {(int)bracket}kr");
     }
 
     static private void WelcomeBanner()
@@ -127,9 +115,9 @@ static internal class Cinema
 
 internal enum CinemaAgeBracket
 {
-    Young,
-    Standard,
-    Pensioner
+    Young = 80,
+    Standard = 120,
+    Pensioner = 90
 }
 
 static internal class Helpers
