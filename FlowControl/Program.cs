@@ -57,27 +57,20 @@ class Program
 
 static internal class Cinema
 {
+    private const int ChildMaxAge = 4;
     private const int YouthMaxAge = 19;
-    private const int PensionerMinAge = 65;
+    private const int StandardMaxAge = 64;
+    private const int PensionerMaxAge = 99;
 
-    static private CinemaAgeBracket CalcAgeBracket(int age)
+    static private CinemaAgeBracket CalcAgeBracket(int age) =>
+    age switch
     {
-        if (age <= YouthMaxAge)
-        {
-            return CinemaAgeBracket.Youth;
-        }
-        else if (age >= PensionerMinAge)
-        {
-            return CinemaAgeBracket.Pensioner;
-        }
-
-        return CinemaAgeBracket.Standard;
-    }
-
-    static private void ShowPrice(CinemaAgeBracket bracket)
-    {
-        Console.WriteLine($"{bracket} price: {(int)bracket}kr");
-    }
+        <= ChildMaxAge => CinemaAgeBracket.Child,
+        <= YouthMaxAge => CinemaAgeBracket.Youth,
+        <= StandardMaxAge => CinemaAgeBracket.Standard,
+        <= PensionerMaxAge => CinemaAgeBracket.Pensioner,
+        _ => CinemaAgeBracket.Elderly
+    };
 
     static private void WelcomeBanner()
     {
@@ -107,7 +100,7 @@ static internal class Cinema
         Console.WriteLine("Thank you for buying one ticket.");
         int age = AskForNumber("Please enter your age to see ticket price");
 
-        ShowPrice(CalcAgeBracket(age));
+        Console.WriteLine(CalcAgeBracket(age));
         Helpers.Pause();
     }
 
@@ -123,7 +116,7 @@ static internal class Cinema
         for (int i = 1; i <= numTickets; i++)
         {
             int age = AskForNumber($"Enter age for person {i}");
-            totalCost += (int)CalcAgeBracket(age);
+            totalCost += CalcAgeBracket(age).Price;
         }
 
         Console.WriteLine($"Total cost for {numTickets} persons is {totalCost}kr");
@@ -131,11 +124,15 @@ static internal class Cinema
     }
 }
 
-internal enum CinemaAgeBracket
+internal record CinemaAgeBracket(string Bracket, int Price)
 {
-    Youth = 80,
-    Standard = 120,
-    Pensioner = 90
+    public static readonly CinemaAgeBracket Child = new ("Child", 0);
+    public static readonly CinemaAgeBracket Youth = new ("Youth", 80);
+    public static readonly CinemaAgeBracket Standard = new ("Standard", 120);
+    public static readonly CinemaAgeBracket Pensioner = new ("Pensioner", 90);
+    public static readonly CinemaAgeBracket Elderly = new ("Elderly", 0);
+
+    public override string ToString() => $"{Bracket}: {Price}kr";
 }
 
 static internal class LoopIt
