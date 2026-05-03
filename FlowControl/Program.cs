@@ -1,5 +1,8 @@
 ﻿namespace FlowControl;
 
+/*
+*  Main program
+*/
 class Program
 {
     static void Main(string[] args)
@@ -55,6 +58,9 @@ class Program
     }
 }
 
+/*
+*  Class for input parsing exercise (Cinema)
+*/
 static internal class Cinema
 {
     static private void WelcomeBanner()
@@ -109,6 +115,9 @@ static internal class Cinema
     }
 }
 
+/*
+*  Record for Cinema exercise
+*/
 internal record CinemaAgeBracket(string Bracket, int Price, int MaxAge)
 {
     public static readonly CinemaAgeBracket Child = new ("Child", 0, 4);
@@ -117,6 +126,7 @@ internal record CinemaAgeBracket(string Bracket, int Price, int MaxAge)
     public static readonly CinemaAgeBracket Pensioner = new ("Pensioner", 90, 99);
     public static readonly CinemaAgeBracket Elderly = new ("Elderly", 0, int.MaxValue);
 
+    // Collected in ascending MaxAge order for easy looping
     private static readonly IReadOnlyList<CinemaAgeBracket> All =
     [
         Child, Youth, Standard, Pensioner, Elderly
@@ -129,6 +139,9 @@ internal record CinemaAgeBracket(string Bracket, int Price, int MaxAge)
             ?? throw new ArgumentOutOfRangeException($"No age bracket found for age: {Age}");
 }
 
+/*
+*  Class to handle looping exercise
+*/
 static internal class LoopIt
 {
     static private void WelcomeBanner()
@@ -153,6 +166,9 @@ static internal class LoopIt
     }
 }
 
+/*
+*  Class to handle string splitting exercise
+*/
 static internal class SplitThirdWord
 {
     static private void WelcomeBanner()
@@ -181,10 +197,15 @@ static internal class SplitThirdWord
     }
 }
 
+/*
+*  Various helper function
+*/
 static internal class Helpers
 {
     static public readonly string DoubleLine = new string('=', 40);
 
+    // Print supplied text between two rows of equalsigns
+    // Color equalsigns with supplied color
     static public void PrintBanner(string text, ConsoleColor color)
     {
         Console.ForegroundColor = color;
@@ -196,12 +217,14 @@ static internal class Helpers
         Console.ResetColor();
     }
 
+    // Pause execution so user can read result
     static public void Pause()
     {
         Console.WriteLine("\nPress any key to continue...");
         Console.ReadLine();
     }
 
+    // Print supplied text in red
     static public void ErrorMessage(string message)
     {
         Console.ForegroundColor = ConsoleColor.Red;
