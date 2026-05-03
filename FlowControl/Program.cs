@@ -57,21 +57,6 @@ class Program
 
 static internal class Cinema
 {
-    private const int ChildMaxAge = 4;
-    private const int YouthMaxAge = 19;
-    private const int StandardMaxAge = 64;
-    private const int PensionerMaxAge = 99;
-
-    static private CinemaAgeBracket CalcAgeBracket(int age) =>
-    age switch
-    {
-        <= ChildMaxAge => CinemaAgeBracket.Child,
-        <= YouthMaxAge => CinemaAgeBracket.Youth,
-        <= StandardMaxAge => CinemaAgeBracket.Standard,
-        <= PensionerMaxAge => CinemaAgeBracket.Pensioner,
-        _ => CinemaAgeBracket.Elderly
-    };
-
     static private void WelcomeBanner()
     {
         Helpers.PrintBanner("Welcome to the Theoretical Cinema", ConsoleColor.Green);
@@ -100,7 +85,7 @@ static internal class Cinema
         Console.WriteLine("Thank you for buying one ticket.");
         int age = AskForNumber("Please enter your age to see ticket price");
 
-        Console.WriteLine(CalcAgeBracket(age));
+        Console.WriteLine(CinemaAgeBracket.FromAge(age));
         Helpers.Pause();
     }
 
@@ -116,7 +101,7 @@ static internal class Cinema
         for (int i = 1; i <= numTickets; i++)
         {
             int age = AskForNumber($"Enter age for person {i}");
-            totalCost += CalcAgeBracket(age).Price;
+            totalCost += CinemaAgeBracket.FromAge(age).Price;
         }
 
         Console.WriteLine($"Total cost for {numTickets} persons is {totalCost}kr");
@@ -124,15 +109,24 @@ static internal class Cinema
     }
 }
 
-internal record CinemaAgeBracket(string Bracket, int Price)
+internal record CinemaAgeBracket(string Bracket, int Price, int MaxAge)
 {
-    public static readonly CinemaAgeBracket Child = new ("Child", 0);
-    public static readonly CinemaAgeBracket Youth = new ("Youth", 80);
-    public static readonly CinemaAgeBracket Standard = new ("Standard", 120);
-    public static readonly CinemaAgeBracket Pensioner = new ("Pensioner", 90);
-    public static readonly CinemaAgeBracket Elderly = new ("Elderly", 0);
+    public static readonly CinemaAgeBracket Child = new ("Child", 0, 4);
+    public static readonly CinemaAgeBracket Youth = new ("Youth", 80, 19);
+    public static readonly CinemaAgeBracket Standard = new ("Standard", 120, 64);
+    public static readonly CinemaAgeBracket Pensioner = new ("Pensioner", 90, 99);
+    public static readonly CinemaAgeBracket Elderly = new ("Elderly", 0, int.MaxValue);
+
+    private static readonly IReadOnlyList<CinemaAgeBracket> All =
+    [
+        Child, Youth, Standard, Pensioner, Elderly
+    ];
 
     public override string ToString() => $"{Bracket}: {Price}kr";
+
+    public static CinemaAgeBracket FromAge(int Age) =>
+        All.FirstOrDefault(g => Age <= g.MaxAge)
+            ?? throw new ArgumentOutOfRangeException($"No age bracket found for age: {Age}");
 }
 
 static internal class LoopIt
