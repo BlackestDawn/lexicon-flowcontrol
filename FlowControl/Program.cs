@@ -73,13 +73,13 @@ static internal class Cinema
         while (true) {
             Console.Write($"{prompt}: ");
             string input = Console.ReadLine();
-            if (!int.TryParse(input, out int age) || age < 0)
+            if (int.TryParse(input, out int age) && age >= 0)
             {
-                Helpers.ErrorMessage($"Could not parse '{input}' into a valid age-number");
+                return age;
             }
             else
             {
-                return age;
+                Helpers.ErrorMessage($"Could not parse '{input}' into a valid age-number");
             }
         }
     }
