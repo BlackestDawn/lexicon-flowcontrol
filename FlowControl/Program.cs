@@ -1,5 +1,8 @@
 ﻿namespace FlowControl;
 
+/*
+*  Main program
+*/
 class Program
 {
     static void Main(string[] args)
@@ -48,39 +51,18 @@ class Program
                     SplitThirdWord.Run();
                     break;
                 default:
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine($"Sorry option '{input}' is not valid or not implemented yet");
-                    Console.ResetColor();
+                    Helpers.ErrorMessage($"Sorry option '{input}' is not valid or not implemented yet");
                     break;
             }
         }
     }
 }
 
+/*
+*  Class for input parsing exercise (Cinema)
+*/
 static internal class Cinema
 {
-    private const int YouthMaxAge = 19;
-    private const int PensionerMinAge = 65;
-
-    static private CinemaAgeBracket CalcAgeBracket(int age)
-    {
-        if (age <= YouthMaxAge)
-        {
-            return CinemaAgeBracket.Youth;
-        }
-        else if (age >= PensionerMinAge)
-        {
-            return CinemaAgeBracket.Pensioner;
-        }
-
-        return CinemaAgeBracket.Standard;
-    }
-
-    static private void ShowPrice(CinemaAgeBracket bracket)
-    {
-        Console.WriteLine($"{bracket} price: {(int)bracket}kr");
-    }
-
     static private void WelcomeBanner()
     {
         Helpers.PrintBanner("Welcome to the Theoretical Cinema", ConsoleColor.Green);
@@ -91,15 +73,13 @@ static internal class Cinema
         while (true) {
             Console.Write($"{prompt}: ");
             string input = Console.ReadLine();
-            if (!int.TryParse(input, out int age) || age < 0)
+            if (int.TryParse(input, out int age) && age >= 0)
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"Could not parse '{input}' into a valid age-number");
-                Console.ResetColor();
+                return age;
             }
             else
             {
-                return age;
+                Helpers.ErrorMessage($"Could not parse '{input}' into a valid age-number");
             }
         }
     }
@@ -111,7 +91,7 @@ static internal class Cinema
         Console.WriteLine("Thank you for buying one ticket.");
         int age = AskForNumber("Please enter your age to see ticket price");
 
-        ShowPrice(CalcAgeBracket(age));
+        Console.WriteLine(CinemaAgeBracket.FromAge(age));
         Helpers.Pause();
     }
 
@@ -127,7 +107,7 @@ static internal class Cinema
         for (int i = 1; i <= numTickets; i++)
         {
             int age = AskForNumber($"Enter age for person {i}");
-            totalCost += (int)CalcAgeBracket(age);
+            totalCost += CinemaAgeBracket.FromAge(age).Price;
         }
 
         Console.WriteLine($"Total cost for {numTickets} persons is {totalCost}kr");
@@ -135,13 +115,33 @@ static internal class Cinema
     }
 }
 
-internal enum CinemaAgeBracket
+/*
+*  Record for Cinema exercise
+*/
+internal record CinemaAgeBracket(string Bracket, int Price, int MaxAge)
 {
-    Youth = 80,
-    Standard = 120,
-    Pensioner = 90
+    public static readonly CinemaAgeBracket Child = new ("Child", 0, 4);
+    public static readonly CinemaAgeBracket Youth = new ("Youth", 80, 19);
+    public static readonly CinemaAgeBracket Standard = new ("Standard", 120, 64);
+    public static readonly CinemaAgeBracket Pensioner = new ("Pensioner", 90, 99);
+    public static readonly CinemaAgeBracket Elderly = new ("Elderly", 0, int.MaxValue);
+
+    // Collected in ascending MaxAge order for easy looping
+    private static readonly IReadOnlyList<CinemaAgeBracket> All =
+    [
+        Child, Youth, Standard, Pensioner, Elderly
+    ];
+
+    public override string ToString() => $"{Bracket}: {Price}kr";
+
+    public static CinemaAgeBracket FromAge(int Age) =>
+        All.FirstOrDefault(g => Age <= g.MaxAge)
+            ?? throw new ArgumentOutOfRangeException($"No age bracket found for age: {Age}");
 }
 
+/*
+*  Class to handle looping exercise
+*/
 static internal class LoopIt
 {
     static private void WelcomeBanner()
@@ -166,6 +166,9 @@ static internal class LoopIt
     }
 }
 
+/*
+*  Class to handle string splitting exercise
+*/
 static internal class SplitThirdWord
 {
     static private void WelcomeBanner()
@@ -185,7 +188,7 @@ static internal class SplitThirdWord
             words = input.Split(" ").Where(str => !string.IsNullOrWhiteSpace(str)).ToArray();
             if (words.Length < 3)
             {
-                Console.WriteLine("Not enough valid words provided, try again");
+                Helpers.ErrorMessage("Not enough valid words provided, try again");
             }
         } while (words.Length < 3);
 
@@ -194,10 +197,15 @@ static internal class SplitThirdWord
     }
 }
 
+/*
+*  Various helper function
+*/
 static internal class Helpers
 {
     static public readonly string DoubleLine = new string('=', 40);
 
+    // Print supplied text between two rows of equalsigns
+    // Color equalsigns with supplied color
     static public void PrintBanner(string text, ConsoleColor color)
     {
         Console.ForegroundColor = color;
@@ -209,9 +217,18 @@ static internal class Helpers
         Console.ResetColor();
     }
 
+    // Pause execution so user can read result
     static public void Pause()
     {
         Console.WriteLine("\nPress any key to continue...");
         Console.ReadLine();
+    }
+
+    // Print supplied text in red
+    static public void ErrorMessage(string message)
+    {
+        Console.ForegroundColor = ConsoleColor.Red;
+        Console.WriteLine($"\n{message}\n");
+        Console.ResetColor();
     }
 }
